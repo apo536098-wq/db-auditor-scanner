@@ -57,3 +57,19 @@ Kod snippet'i
 [=] ADIM 2: SQL INJECTION TACTICAL SCAN [=]
 [*] Test Edilen Girdi: Kadir' OR '1'='1
 [(1, 'Kadir', 2), (2, 'Murat', 1), (3, 'Elif', 2)]
+
+---
+
+## 🚀 QUICK START // HOW TO RUN THIS SUITE
+
+If you want to pull this automated security engine and run it inside your local Kali Linux machine, execute these commands sequentially in your terminal:
+
+```bash
+# 1. Clone the secure repository directly to your workspace
+git clone [https://github.com/apo536098-wq/db-auditor-scanner.git](https://github.com/apo536098-wq/db-auditor-scanner.git)
+
+# 2. Enter the active deployment directory
+cd db-auditor-scanner
+
+# 3. Fire up the relational base setup, the scanner, and the log intelligence system
+python3 database_setup.py && python3 audit_scanner.py && python3 log_analyzer.py
