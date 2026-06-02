@@ -1,4 +1,8 @@
-# 🛡️ DB-Auditor-Scanner (v1.1.0)
+# 📡 [SYSTEM ACCESS: GRANTED] // CODE: DB-AUDITOR-SCANNER
+
+<p align="center">
+  <img src="https://blog.malwarebytes.com/wp-content/uploads/2018/10/network-recon-gif.gif" width="100%" alt="Cyber Security Operations Center Stream"/>
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Security_Level-Tactical_SOC-red?style=for-the-badge&logo=kali-linux&logoColor=white" alt="SOC Status"/>
@@ -6,25 +10,50 @@
   <img src="https://img.shields.io/badge/Storage-SQLite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="Database"/>
 </p>
 
-<p align="center">
-  <b>An automated database security audit suite, schema constraint enforcement engine, and reactive cyber threat log parser.</b>
-</p>
-
 ---
 
-## ⚡ System Architecture & Data Flow
-
-
-
-Proje, ilişkisel veritabanı bütünlük kurallarını (Relational Integrity Constraints) siber zafiyet test modelleriyle birleştiren hibrit bir yapıya sahiptir. Süreç akışı şu şekildedir:
+## ⚡ TARGET SYSTEM ARCHITECTURE & EXPLOIT FLOW
 
 ```text
-  [ Network Traffic ] ──► [ log_analyzer.py ] ──► ( Regex Inspection Engine )
-                                                          │
-   ┌──────────────────────────────────────────────────────┴─────────┐
-   ▼ (Malicious Payloads)                                           ▼ (Valid Operations)
-[ SecurityLogs Table ]                                      [ database_setup.py ]
-   │                                                                │
-   ▼                                                                ▼
-[ Threat Telemetry ] ◄── [ audit_scanner.py ] ◄────────────── [ cyber_university.db ]
-                      (Constraint / SQLi Auditing)
+ [ INCOMING NETWORK TRAFFIC ]
+             │
+             ▼
+   [ log_analyzer.py ] ───( REGEX SIGNATURE ENGINE )───┐
+             │                                         │
+             ├─► [MATCH: MALICIOUS PAYLOAD]            ├─► [MATCH: COMPLIANT TRAFFIC]
+             │   (Classification: HIGH/MEDIUM)         │   (Classification: LOW)
+             ▼                                         ▼
+   { SecurityLogs Telemetry }                 { database_setup.py }
+             │                                         │
+             │                                         ▼
+             └─────────────────────────────────► [ cyber_university.db ]
+
+
+
+🛰️ RECONNAISSANCE & TACTICAL CORE MODULES
+🎛️ MODULE 0x01 // Relational Schema Auditor (audit_scanner.py)
+INTEGRITY-CHECK: CHECK, NOT NULL ve PRIMARY KEY kısıtlamalarını programatik olarak test eder.
+
+CONSTRAINT-BYPASS-TEST: CHECK (Sinif IN (1, 2)) kuralını ihlal eden Class: 3 gibi geçersiz girdiler göndererek sistemin fırlattığı IntegrityError çıktılarını yakalar.
+
+🎛️ MODULE 0x02 // SQLi Adversarial Simulator (audit_scanner.py)
+AUTH-BYPASS-VECTOR: Tek tırnak manipülasyonu kullanarak mantıksal kimlik doğrulama bypass adımlarını (' OR '1'='1) simüle eder.
+
+DATA-LEAK-MAPPER: Input validation (girdi doğrulama) kırıldığında oluşan sızıntıları terminale döker.
+
+🎛️ MODULE 0x03 // Threat Log Intelligence Parser (log_analyzer.py)
+SIGNATURE-DETECTION: Ağ günlüklerindeki UNION, -- ve zararlı SQL enjeksiyon izlerini imza tabanlı regex ile tarar.
+
+💻 DEPLOYMENT & CORE INJECTION VECTORS (KALI LINUX)
+Bash
+python3 database_setup.py
+python3 audit_scanner.py
+python3 log_analyzer.py
+📊 LIVE TERMINAL TELEMETRY // SOC OPERATIONS STREAM
+Kod snippet'i
+[=] ADIM 1: VERİTABANI KISITLAMA DENETİMİ BAŞLADI [=]
+[✅ GÜVENLİ] Veritabanı CHECK kısıtlaması ihlali yakaladı: CHECK constraint failed: Ogrenci
+
+[=] ADIM 2: SQL INJECTION TACTICAL SCAN [=]
+[*] Test Edilen Girdi: Kadir' OR '1'='1
+[(1, 'Kadir', 2), (2, 'Murat', 1), (3, 'Elif', 2)]
